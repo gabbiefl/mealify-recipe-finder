@@ -1,0 +1,303 @@
+@import "variables.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font;
+  background-color: #fafafa;
+  color: $black;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-primary;
+  height: 80px;
+  padding: 0 20px;
+  gap: 10px;
+  font-size: $subtitle;
+  color: $white;
+  font-weight: 600;
+  z-index: 9999;
+}
+
+.meal-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .meal-bg {
+    position: relative;
+    width: 100%;
+    background: url("../img/bg.jpg") center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    padding: 60px 30px;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: inherit;
+      background-size: cover;
+      filter: blur(7px) brightness(0.7);
+      transform: scale(1.1);
+      z-index: 0;
+    }
+
+    .meal-search {
+      position: relative;
+      z-index: 1;
+      background-color: $white;
+      color: $black;
+      padding: 60px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      max-width: 950px;
+      text-align: center;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px $shadow;
+
+      h1 {
+        max-width: 700px;
+        font-size: $main-title;
+      }
+
+      p {
+        margin: 15px 0;
+        max-width: 650px;
+        font-size: $text;
+      }
+
+      @media (max-width: 768px) {
+        padding: 40px 20px;
+
+        h1 {
+          font-size: calc(#{$main-title} - 8px);
+        }
+
+        p {
+          font-size: calc(#{$text} - 2px);
+        }
+      }
+
+    }
+  }
+}
+
+.meal-search-box {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+
+  input,
+  button {
+    border-radius: 14px;
+    font-size: $text;
+  }
+
+  input {
+    padding: 10px 20px;
+    border: 1px solid $gray;
+    flex: 1;
+    min-width: 350px;
+  }
+
+  button {
+    padding: 10px 20px;
+    border: none;
+    background-color: $color-primary;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+
+    i {
+      color: $white;
+      font-size: $text;
+    }
+
+    &:hover {
+      background-color: $color-secondary;
+    }
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: row;
+    align-items: center;
+
+    input {
+      min-width: unset;
+      flex: 1;
+    }
+
+    button {
+      flex: 0 0 60px;
+      padding: 10px 0;
+    }
+  }
+}
+
+.meal-result {
+  padding: 40px 20px;
+  text-align: center;
+  max-width: 1200px;
+  width: 100%;
+
+  h2 {
+    font-size: $subtitle;
+    margin-bottom: 30px;
+  }
+
+  #meal {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+
+    &.notFound {
+      grid-template-columns: 1fr !important;
+      color: $color-primary;
+      font-size: $main-text;
+      font-weight: 600;
+      width: 100%;
+    }
+  }
+
+  .meal-item {
+    background-color: $white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px $shadow;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.03);
+    }
+
+    .meal-img img {
+      width: 100%;
+      display: block;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .meal-name {
+      padding: 15px;
+
+      h3 {
+        margin-bottom: 10px;
+        font-size: $main-text;
+      }
+
+      .recipe-btn {
+        border: none;
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: $color-primary;
+        color: $white;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: $text;
+        transition: 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $color-secondary;
+        }
+      }
+    }
+  }
+}
+
+.meal-details {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
+  background-color: $white;
+  color: $black;
+  border-radius: 14px;
+  max-width: 800px;
+  width: 90%;
+  max-height: 90%;
+  padding: 30px;
+  box-shadow: 0 8px 20px $shadow;
+  overflow-y: auto;
+  display: none;
+  animation: fadeIn 0.3s ease;
+
+  .meals-details-content {
+    h2 {
+      font-size: $subtitle;
+      margin-bottom: 10px;
+    }
+
+    .recipe-category {
+      font-style: italic;
+      color: $gray;
+      margin-bottom: 20px;
+    }
+
+    .recipe-instruct {
+      h3 {
+        margin: 15px 0;
+      }
+      p {
+        line-height: 1.5;
+        margin-bottom: 15px;
+      }
+
+      .recipe-meal-img img {
+        max-width: 350px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  .recipe-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: $color-primary;
+    border: none;
+    color: $white;
+    font-size: 18px;
+    padding: 6px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.2s;
+    z-index: 1;
+
+    &:hover {
+      background: $color-secondary;
+    }
+
+    i {
+      pointer-events: none;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.meal-details.show {
+  display: block;
+}
