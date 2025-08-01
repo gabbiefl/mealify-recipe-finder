@@ -1,9 +1,5 @@
 # Ignora as dependências do Node.js
 node_modules/
 
-# Ignora os arquivos gerados automaticamente pelo SASS
-assets/style/style.css
-assets/style/style.css.map
-
 # Ignora arquivos do VS Code
 .vscode/
